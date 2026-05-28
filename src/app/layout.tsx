@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Geist } from "next/font/google";
 import "./globals.css";
+import { CustomCursor } from "@/components/global/CustomCursor";
+import { MoodProvider } from "@/components/global/MoodProvider";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -66,7 +68,12 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geist.variable} dark antialiased`}
     >
-      <body className="min-h-screen flex flex-col selection:bg-primary/30">{children}</body>
+      <body className="min-h-screen flex flex-col selection:bg-primary/30">
+        <MoodProvider>
+          <CustomCursor />
+          {children}
+        </MoodProvider>
+      </body>
     </html>
   );
 }

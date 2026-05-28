@@ -1,54 +1,51 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Lock } from "lucide-react";
 
 export function PricingSection() {
   return (
-    <section className="py-40 px-6 bg-[#050505] relative overflow-hidden">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
+    <section className="py-52 px-6 bg-[#050505] relative overflow-hidden min-h-[100svh] flex items-center justify-center">
+      
+      {/* Blurred "Completed Trip" background */}
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-30">
+        <div className="w-[80vw] h-[80vh] border border-white/20 rounded-3xl bg-white/5 backdrop-blur-3xl overflow-hidden relative">
+           {/* Abstract shapes representing an itinerary */}
+           <div className="absolute top-10 left-10 w-1/2 h-8 bg-white/10 rounded-full" />
+           <div className="absolute top-24 left-10 w-1/3 h-4 bg-white/10 rounded-full" />
+           <div className="absolute top-40 left-10 w-3/4 h-32 bg-white/10 rounded-2xl" />
+           <div className="absolute top-80 left-10 w-2/3 h-20 bg-white/10 rounded-2xl" />
+           
+           <div className="absolute inset-0 backdrop-blur-[100px]" />
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-4xl text-center flex flex-col items-center">
         
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 text-center md:text-left"
+          transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12"
         >
-          <h2 className="text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight text-white mb-6 leading-[1.1]">
-            Less than a coffee.
+          <Lock className="w-12 h-12 text-white/40 mb-12 mx-auto" />
+          <h2 className="text-5xl md:text-7xl font-medium tracking-tight text-white mb-4 leading-[1.1]">
+            Your trip is already ready.
           </h2>
-          <h3 className="text-2xl md:text-4xl font-light text-white/50 leading-[1.2]">
-            Worth hours of planning stress.
+          <h3 className="text-4xl md:text-6xl font-light text-white/50 leading-[1.2]">
+            Unlock it for ₹49.
           </h3>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 w-full"
+          transition={{ duration: 1.5, delay: 0.5 }}
+          className="mt-16 text-white/30 tracking-widest text-sm uppercase font-mono"
         >
-          <div className="text-left md:pl-16 border-l-0 md:border-l border-white/10 space-y-8">
-            <p className="text-2xl text-white font-light">Unlock your complete trip:</p>
-            
-            <ul className="text-white/60 space-y-4 text-xl font-light">
-              <li>Transport</li>
-              <li>Stays</li>
-              <li>Day-wise plans</li>
-              <li>Weather packing</li>
-              <li>Local spots</li>
-            </ul>
-
-            <div className="pt-12">
-              <span className="text-white/40 text-xl block mb-2">For</span>
-              <span className="text-7xl font-medium text-white tracking-tighter">₹49</span>
-            </div>
-
-            <div className="pt-12 text-white/30 text-sm tracking-widest uppercase">
-              Or use <span className="text-white font-medium">TripEarly10</span> to unlock your first one free.
-            </div>
-          </div>
+          Or use <span className="text-white font-bold">TripEarly10</span> to unlock your first escape free.
         </motion.div>
 
       </div>

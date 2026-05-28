@@ -96,7 +96,16 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground selection:bg-primary/30 selection:text-primary;
+    @apply bg-background text-foreground;
+    cursor: none; /* Hide default cursor for cinematic custom cursor */
+  }
+  
+  /* Ensure links and buttons also hide default cursor since the custom cursor will handle it */
+  a, button, input, textarea, select {
+    cursor: none !important;
+  }
+  body {
+    @apply selection:bg-primary/30 selection:text-primary;
     overflow-x: hidden;
   }
   html {
