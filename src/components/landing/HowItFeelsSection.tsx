@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function HowItFeelsSection() {
   return (
-    <section id="how-it-feels" className="py-52 px-6 relative bg-[#050505] min-h-[100svh] flex items-center justify-center">
+    <section id="how-it-feels" className="py-52 px-6 relative bg-transparent min-h-[100svh] flex items-center justify-center">
       <div className="max-w-4xl mx-auto w-full">
         
         <div className="space-y-40">

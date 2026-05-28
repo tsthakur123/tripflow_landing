@@ -53,7 +53,7 @@ export function CustomCursor() {
           {/* Core Dot */}
           <div className="w-2 h-2 bg-white rounded-full" />
           {/* Subtle Outer Glow / Pulse */}
-          <div className="absolute inset-0 border border-white/30 rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
+          <div className="absolute inset-0 border border-primary/50 rounded-full animate-[spin_4s_linear_infinite] scale-[1.5]" />
         </div>
       </motion.div>
     </>

@@ -10,7 +10,7 @@ const outcomes = [
 
 export function SocialProofSection() {
   return (
-    <section className="py-40 px-6 bg-[#050505] flex items-center justify-center">
+    <section className="py-40 px-6 bg-transparent flex items-center justify-center">
       <div className="max-w-4xl mx-auto flex flex-col gap-32">
         {outcomes.map((quote, i) => (
           <motion.div
@@ -21,7 +21,7 @@ export function SocialProofSection() {
             transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
             className="text-center"
           >
-            <p className="text-3xl md:text-5xl lg:text-6xl text-white/80 font-light leading-[1.3]">
+            <p className="text-3xl md:text-5xl lg:text-6xl opacity-80 font-light leading-[1.3]">
               "{quote}"
             </p>
           </motion.div>

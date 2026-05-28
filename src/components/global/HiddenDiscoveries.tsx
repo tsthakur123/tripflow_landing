@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMood } from "@/components/global/MoodProvider";
 
 export function HiddenDiscoveries() {
+  const { globalMood } = useMood();
   const [discoveries, setDiscoveries] = useState<{ id: number; text: string; x: number; y: number }[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -16,17 +18,25 @@ export function HiddenDiscoveries() {
   ];
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
     let count = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
 
-      // Spawn a tiny discovery randomly when mouse moves fast or pauses
       if (Math.random() > 0.99 && count < 5) {
+        // If a mood is set (trip generated), spawn ghost fragments of the boarding pass
+        const tripGhost = globalMood ? [
+          `DEST: ${globalMood.toUpperCase()}`,
+          "GATE 14",
+          "STATUS: ESCAPED",
+          "DEP: FRIDAY NIGHT"
+        ] : [];
+        
+        const possibleTexts = [...triggers, ...tripGhost];
+        
         const newDiscovery = {
           id: Date.now(),
-          text: triggers[Math.floor(Math.random() * triggers.length)],
+          text: possibleTexts[Math.floor(Math.random() * possibleTexts.length)],
           x: e.clientX + (Math.random() * 100 - 50),
           y: e.clientY + (Math.random() * 100 - 50)
         };
@@ -34,7 +44,6 @@ export function HiddenDiscoveries() {
         setDiscoveries(prev => [...prev, newDiscovery]);
         count++;
 
-        // Remove the discovery after a few seconds
         setTimeout(() => {
           setDiscoveries(prev => prev.filter(d => d.id !== newDiscovery.id));
           count--;
@@ -44,7 +53,7 @@ export function HiddenDiscoveries() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [globalMood]);
 
   return (
     <div className="fixed inset-0 z-50 pointer-events-none">

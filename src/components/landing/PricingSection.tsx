@@ -5,7 +5,7 @@ import { Lock } from "lucide-react";
 
 export function PricingSection() {
   return (
-    <section className="py-52 px-6 bg-[#050505] relative overflow-hidden min-h-[100svh] flex items-center justify-center">
+    <section className="py-52 px-6 bg-transparent relative overflow-hidden min-h-[100svh] flex items-center justify-center">
       
       {/* Blurred "Completed Trip" background */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-30">

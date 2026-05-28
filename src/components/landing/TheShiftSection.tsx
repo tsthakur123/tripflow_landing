@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function TheShiftSection() {
   return (
-    <section className="py-52 px-6 relative bg-[#050505] min-h-[100svh] flex flex-col justify-center">
+    <section className="py-52 px-6 relative min-h-[100svh] flex flex-col justify-center border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full z-10 relative flex flex-col lg:flex-row items-center justify-between gap-16">
         
         <motion.div
@@ -19,23 +19,38 @@ export function TheShiftSection() {
           </h2>
         </motion.div>
 
-        {/* Visual Flowing Concept */}
+        {/* The Relief Dopamine Payload */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
+          whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
           viewport={{ once: true, margin: "-200px" }}
           transition={{ duration: 2, delay: 0.5 }}
-          className="flex-1 w-full flex flex-col items-start lg:items-end gap-6 text-3xl md:text-5xl font-light text-white/40"
+          className="flex-1 w-full"
         >
-          <motion.div whileHover={{ x: 20, color: "#fff" }} className="transition-all duration-500 cursor-default">Routes</motion.div>
-          <motion.div whileHover={{ x: 20, color: "#fff" }} className="transition-all duration-500 cursor-default">Stays</motion.div>
-          <motion.div whileHover={{ x: 20, color: "#fff" }} className="transition-all duration-500 cursor-default">Weather</motion.div>
-          <motion.div whileHover={{ x: 20, color: "#fff" }} className="transition-all duration-500 cursor-default">Itineraries</motion.div>
-          <motion.div whileHover={{ x: 20, color: "#fff" }} className="transition-all duration-500 cursor-default">Local spots</motion.div>
-          
-          <div className="w-full h-px bg-white/10 my-8" />
-          
-          <div className="text-4xl md:text-6xl text-white font-medium">One journey.</div>
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-md shadow-2xl flex flex-col gap-6 font-mono text-sm tracking-widest uppercase text-white/50">
+            
+            <div className="flex justify-between items-center border-b border-white/10 pb-6">
+              <span className="text-white">Leave Friday 11:40 PM</span>
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_var(--primary)]" />
+            </div>
+            
+            <div className="flex justify-between items-center border-b border-white/10 pb-6">
+              <span className="text-white">Reach by sunrise</span>
+            </div>
+
+            <div className="flex justify-between items-center border-b border-white/10 pb-6">
+              <span className="text-white">Café saved</span>
+            </div>
+
+            <div className="flex justify-between items-center border-b border-white/10 pb-6">
+              <span className="text-white">Rain expected Sunday</span>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-white">Budget fits</span>
+            </div>
+
+          </div>
         </motion.div>
 
       </div>

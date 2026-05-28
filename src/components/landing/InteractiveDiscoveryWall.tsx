@@ -14,7 +14,7 @@ export function InteractiveDiscoveryWall() {
   const [activeMood, setActiveMood] = useState(moods[0]);
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col justify-end pb-32 px-6 overflow-hidden bg-[#050505]">
+    <section className="relative min-h-[100svh] flex flex-col justify-end pb-32 px-6 overflow-hidden bg-transparent">
       
       {/* Dynamic Cinematic Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
