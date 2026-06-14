@@ -58,10 +58,10 @@ export function HeroSection() {
             17 long weekends left this year.
           </motion.div>
 
-          <a 
-            href="https://tripflow.live" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://web.tripflow.live"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-primary text-black px-6 py-2 rounded-full text-sm font-medium tracking-wide hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(203,243,110,0.3)]"
           >
             Start Escaping

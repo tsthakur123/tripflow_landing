@@ -17,17 +17,21 @@ export function FinalCtaSection() {
 
   return (
     <section className="relative py-64 px-6 min-h-[100svh] flex flex-col justify-center items-center bg-transparent overflow-hidden">
-      
       {/* Immersive Soundless Cinematic Visual: Airplane wing above clouds / Sunrise */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <motion.div 
+        <motion.div
           animate={{ scale: [1, 1.05] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear", repeatType: "reverse" }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: "linear",
+            repeatType: "reverse",
+          }}
           className="absolute inset-0"
         >
-          <img 
-            src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?q=80&w=2069&auto=format&fit=crop" 
-            alt="Sunrise above clouds" 
+          <img
+            src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?q=80&w=2069&auto=format&fit=crop"
+            alt="Sunrise above clouds"
             className="w-full h-full object-cover mix-blend-screen opacity-20"
           />
         </motion.div>
@@ -35,7 +39,6 @@ export function FinalCtaSection() {
       </div>
 
       <div className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center">
-        
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,30 +67,39 @@ export function FinalCtaSection() {
           <h2 className="text-3xl md:text-5xl font-medium opacity-100 mb-16 tracking-tight max-w-3xl leading-[1.3]">
             Where would you leave for if nobody stopped you?
           </h2>
-          
+
           {/* THE ORB LOOP */}
-          <div className="relative cursor-pointer group" onMouseEnter={() => setIsHoveringOrb(true)} onMouseLeave={() => setIsHoveringOrb(false)} onClick={resetJourney}>
-            <motion.div 
-              animate={{ scale: isHoveringOrb ? 1.2 : 1, opacity: isHoveringOrb ? 0.2 : 0.05 }}
+          <div
+            className="relative cursor-pointer group"
+            onMouseEnter={() => setIsHoveringOrb(true)}
+            onMouseLeave={() => setIsHoveringOrb(false)}
+            onClick={resetJourney}
+          >
+            <motion.div
+              animate={{
+                scale: isHoveringOrb ? 1.2 : 1,
+                opacity: isHoveringOrb ? 0.2 : 0.05,
+              }}
               transition={{ duration: 1 }}
               className="absolute inset-0 bg-current rounded-full blur-[40px]"
             />
             <div className="relative w-32 h-32 rounded-full border border-current/20 bg-current/5 backdrop-blur-xl flex items-center justify-center transition-all duration-700">
-              <span className="opacity-60 font-light text-xl transition-opacity duration-500 group-hover:opacity-100">Restart</span>
+              <span className="opacity-60 font-light text-xl transition-opacity duration-500 group-hover:opacity-100">
+                Restart
+              </span>
             </div>
           </div>
 
-          <a 
-            href="https://tripflow.live" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://web.tripflow.live"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 bg-[#050505] text-white px-10 py-4 rounded-full text-lg font-medium tracking-wide hover:bg-primary hover:text-black hover:scale-105 transition-all shadow-2xl"
           >
             Book Your Trip Now
           </a>
         </motion.div>
       </div>
-      
     </section>
   );
 }
