@@ -52,7 +52,7 @@ export function ProblemSection() {
   );
 
   return (
-    <section ref={containerRef} className="relative h-[400vh]">
+    <section id="problem-section" ref={containerRef} className="relative h-[400vh]">
       {/* Sticky Film Frame */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         {/* SCENE 1: Reality Invades */}

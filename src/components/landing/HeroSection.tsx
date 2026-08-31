@@ -1,15 +1,51 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMood } from "@/components/global/MoodProvider";
-import { PlaneTakeoff } from "lucide-react";
+import { PlaneTakeoff, ChevronDown, ArrowUpRight, Sparkles } from "lucide-react";
 
 export function HeroSection() {
   const { setGlobalMood } = useMood();
   const [isHoveringOrb, setIsHoveringOrb] = useState(false);
   const [mood, setLocalMood] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showTour, setShowTour] = useState(true);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 3-Second Website Tour highlight for "Start Escaping" CTA (starts after OpeningExperience finishes at 3.5s)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTour(false);
+    }, 7200); // 3.5s OpeningExperience + 3.7s tour display = 7.2s total from mount
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleMouseEnterOrb = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    setIsHoveringOrb(true);
+  };
+
+  const handleMouseLeaveOrb = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsHoveringOrb(false);
+    }, 300);
+  };
+
+  const scrollToNextSection = () => {
+    const problemSection = document.getElementById("problem-section");
+    if (problemSection) {
+      problemSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    }
+  };
 
   // Backgrounds map to moods
   const backgrounds: Record<string, string> = {
@@ -37,7 +73,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-transparent">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center pt-24 pb-28 overflow-hidden bg-transparent">
       {/* BRANDING LOGO & ESCAPE TIMER */}
       <div className="absolute top-8 left-6 md:left-12 z-50 flex items-center justify-between w-[calc(100%-3rem)] md:w-[calc(100%-6rem)]">
         <img
@@ -46,26 +82,58 @@ export function HeroSection() {
           className="h-7 md:h-10 w-auto opacity-80 scale-[1.1]"
         />
 
-        <div className="flex items-center gap-6">
-          {/* The Escape Timer */}
+        <div className="flex items-center gap-4 md:gap-6">
+          {/* The Escape Timer (Urgency Guide) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 1 }}
-            className="hidden md:flex text-white/40 text-xs font-mono tracking-widest uppercase items-center gap-2"
+            className="hidden md:flex text-white/50 text-xs font-mono tracking-widest uppercase items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md"
           >
-            <span className="w-2 h-2 rounded-full bg-red-500/50 animate-pulse" />
-            17 long weekends left this year.
+            <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse shadow-[0_0_8px_rgba(248,113,113,0.8)]" />
+            <span>17 long weekends left</span>
           </motion.div>
 
-          <a
-            href="https://web.tripflow.live"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-primary text-black px-6 py-2 rounded-full text-sm font-medium tracking-wide hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(203,243,110,0.3)]"
-          >
-            Start Escaping
-          </a>
+          {/* High-Conversion CTA Group with 2-Second Website Tour Guide */}
+          <div className="relative flex items-center gap-3">
+            {/* Glowing CTA Button with Beacon Halo */}
+            <div className={`relative group ${showTour ? "z-50" : ""}`}>
+              <span className={`absolute -inset-1 rounded-full bg-primary/40 blur-md transition-all duration-500 pointer-events-none ${showTour ? "scale-115 bg-primary/80 blur-lg animate-ping" : "group-hover:bg-primary/70 group-hover:blur-lg animate-pulse"}`} />
+
+              <a
+                href="https://web.tripflow.live"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setShowTour(false)}
+                className="relative flex items-center gap-2 bg-primary text-black px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-white hover:scale-105 transition-all shadow-[0_0_25px_rgba(203,243,110,0.4)]"
+              >
+                <span>Start Escaping</span>
+                <ArrowUpRight className="w-4 h-4 text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+              </a>
+
+              {/* 2-Second Website Tour Spotlight & Floating Guide Badge */}
+              <AnimatePresence>
+                {showTour && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.9 }}
+                    transition={{ delay: 3.6, duration: 0.5, type: "spring" }}
+                    className="absolute -bottom-12 right-0 whitespace-nowrap flex items-center gap-2 bg-primary text-black px-3.5 py-1.5 rounded-full shadow-[0_0_25px_rgba(203,243,110,0.6)] pointer-events-none z-50"
+                  >
+                    {/* Pointer Notch pointing up at button */}
+                    <div className="absolute -top-1 right-8 w-2.5 h-2.5 bg-primary rotate-45" />
+                    <span className="text-[10px] font-mono uppercase tracking-widest bg-black/20 text-black px-1.5 py-0.5 rounded font-bold">
+                      TOUR
+                    </span>
+                    <span className="text-xs font-medium tracking-wide">
+                      Click here to start escaping →
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -116,21 +184,21 @@ export function HeroSection() {
               transition={{ duration: 1.5, ease: "easeInOut" }}
               className="flex flex-col items-center"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight text-white/90 mb-2 leading-[1.2]">
+              <h1 className="text-4xl md:text-6xl lg:text-[4.5rem] font-medium tracking-tight text-white/90 mb-1 leading-[1.15]">
                 You keep saying
               </h1>
-              <h1 className="text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight text-white/90 mb-12 leading-[1.2]">
+              <h1 className="text-4xl md:text-6xl lg:text-[4.5rem] font-medium tracking-tight text-white/90 mb-4 md:mb-6 leading-[1.15]">
                 we should go somewhere.
               </h1>
-              <h1 className="text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight text-primary mb-24 leading-[1.2]">
+              <h1 className="text-4xl md:text-6xl lg:text-[4.5rem] font-medium tracking-tight text-primary mb-8 md:mb-12 leading-[1.15]">
                 So go.
               </h1>
 
               {/* THE ORB */}
               <div
-                className="relative cursor-pointer group"
-                onMouseEnter={() => setIsHoveringOrb(true)}
-                onMouseLeave={() => setIsHoveringOrb(false)}
+                className="relative cursor-pointer group p-16 -m-16 flex flex-col items-center justify-center"
+                onMouseEnter={handleMouseEnterOrb}
+                onMouseLeave={handleMouseLeaveOrb}
               >
                 {/* Glowing Aura */}
                 <motion.div
@@ -141,19 +209,19 @@ export function HeroSection() {
                   transition={{ duration: 1 }}
                   className="absolute inset-0 bg-white rounded-full blur-[40px]"
                 />
-                <div className="relative w-32 h-32 rounded-full border border-white/20 bg-white/5 backdrop-blur-xl flex items-center justify-center transition-all duration-700">
-                  <span className="text-white/60 font-light text-xl transition-colors duration-500 group-hover:text-white">
+                <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full border border-white/20 bg-white/5 backdrop-blur-xl flex items-center justify-center transition-all duration-700">
+                  <span className="text-white/60 font-light text-lg md:text-xl transition-colors duration-500 group-hover:text-white">
                     Where to?
                   </span>
                 </div>
 
-                {/* Floating Intentions (Reveal on hover) */}
+                {/* Floating Intentions (Reveal tightly around the orb on hover) */}
                 <AnimatePresence>
                   {isHoveringOrb && (
                     <>
                       <motion.button
-                        initial={{ opacity: 0, x: -50, y: -20 }}
-                        animate={{ opacity: 1, x: -100, y: -40 }}
+                        initial={{ opacity: 0, x: -20, y: -10 }}
+                        animate={{ opacity: 1, x: -65, y: -25 }}
                         exit={{ opacity: 0 }}
                         onClick={() => handleIntentionClick("mountains")}
                         className="absolute top-0 left-0 whitespace-nowrap text-white/70 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10"
@@ -161,8 +229,8 @@ export function HeroSection() {
                         Mountains
                       </motion.button>
                       <motion.button
-                        initial={{ opacity: 0, x: 50, y: -20 }}
-                        animate={{ opacity: 1, x: 100, y: -40 }}
+                        initial={{ opacity: 0, x: 20, y: -10 }}
+                        animate={{ opacity: 1, x: 65, y: -25 }}
                         exit={{ opacity: 0 }}
                         onClick={() => handleIntentionClick("beach")}
                         className="absolute top-0 right-0 whitespace-nowrap text-white/70 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10"
@@ -170,8 +238,8 @@ export function HeroSection() {
                         Beach
                       </motion.button>
                       <motion.button
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 80 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 50 }}
                         exit={{ opacity: 0 }}
                         onClick={() => handleIntentionClick("rainy_city")}
                         className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap text-white/70 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10"
@@ -307,6 +375,45 @@ export function HeroSection() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* SCROLL DOWN MARKER */}
+      <motion.button
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: isHoveringOrb ? 0 : 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        onClick={scrollToNextSection}
+        aria-label="Scroll down to explore"
+        className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-white/40 hover:text-white/80 transition-colors duration-300 group cursor-pointer"
+      >
+        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 group-hover:text-white/70 transition-colors">
+          Scroll
+        </span>
+        <div className="w-5 h-9 rounded-full border border-white/20 group-hover:border-white/40 flex items-start justify-center p-1 transition-colors bg-black/20 backdrop-blur-xs">
+          <motion.div
+            animate={{
+              y: [0, 12, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-1 h-2 rounded-full bg-primary shadow-[0_0_8px_var(--primary)]"
+          />
+        </div>
+        <motion.div
+          animate={{
+            y: [0, 4, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <ChevronDown className="w-4 h-4 text-white/40 group-hover:text-white/80 transition-colors" />
+        </motion.div>
+      </motion.button>
     </section>
   );
 }
