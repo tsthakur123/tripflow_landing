@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMood } from "@/components/global/MoodProvider";
 import { PlaneTakeoff, ChevronDown, ArrowUpRight, Sparkles } from "lucide-react";
+import { getRemainingLongWeekendsCount } from "@/lib/longWeekends";
 
 export function HeroSection() {
   const { setGlobalMood } = useMood();
@@ -11,7 +12,12 @@ export function HeroSection() {
   const [mood, setLocalMood] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showTour, setShowTour] = useState(true);
+  const [remainingLongWeekends, setRemainingLongWeekends] = useState<number | null>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setRemainingLongWeekends(getRemainingLongWeekendsCount());
+  }, []);
 
   // 3-Second Website Tour highlight for "Start Escaping" CTA (starts after OpeningExperience finishes at 3.5s)
   useEffect(() => {
@@ -91,7 +97,11 @@ export function HeroSection() {
             className="hidden md:flex text-white/50 text-xs font-mono tracking-widest uppercase items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md"
           >
             <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse shadow-[0_0_8px_rgba(248,113,113,0.8)]" />
-            <span>17 long weekends left</span>
+            <span>
+              {remainingLongWeekends !== null
+                ? `${remainingLongWeekends} long weekend${remainingLongWeekends === 1 ? "" : "s"} left`
+                : "long weekends left"}
+            </span>
           </motion.div>
 
           {/* High-Conversion CTA Group with 2-Second Website Tour Guide */}
