@@ -27,6 +27,24 @@ export function HeroSection() {
     return () => clearTimeout(timer);
   }, []);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToDemo = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const demo = document.getElementById("product-demo");
+    if (demo) {
+      demo.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleMouseEnterOrb = () => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -80,13 +98,31 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[100svh] flex flex-col items-center justify-center pt-24 pb-28 overflow-hidden bg-transparent">
-      {/* BRANDING LOGO & ESCAPE TIMER */}
-      <div className="absolute top-8 left-6 md:left-12 z-50 flex items-center justify-between w-[calc(100%-3rem)] md:w-[calc(100%-6rem)]">
-        <img
-          src="/logo.png"
-          alt="TripFlow Logo"
-          className="h-7 md:h-10 w-auto opacity-80 scale-[1.1]"
-        />
+      {/* PERSISTENT BRANDING NAVBAR & HOW IT WORKS */}
+      <nav 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex items-center justify-between px-6 md:px-12 ${
+          isScrolled 
+            ? "py-3.5 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.8)]" 
+            : "py-6 md:py-8 bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="flex items-center gap-4 sm:gap-6">
+          <img
+            src="/logo.png"
+            alt="TripFlow Logo"
+            className="h-7 md:h-9 w-auto opacity-90 scale-[1.05]"
+          />
+
+          {/* How It Works Navigation Link */}
+          <a
+            href="#product-demo"
+            onClick={scrollToDemo}
+            className="inline-flex items-center gap-1.5 text-xs md:text-sm font-medium tracking-wide text-white/70 hover:text-white px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all cursor-pointer shadow-sm"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <span>How It Works</span>
+          </a>
+        </div>
 
         <div className="flex items-center gap-4 md:gap-6">
           {/* The Escape Timer (Urgency Guide) */}
@@ -115,7 +151,7 @@ export function HeroSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowTour(false)}
-                className="relative flex items-center gap-2 bg-primary text-black px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-white hover:scale-105 transition-all shadow-[0_0_25px_rgba(203,243,110,0.4)]"
+                className="relative flex items-center gap-2 bg-primary text-black px-5 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide hover:bg-white hover:scale-105 transition-all shadow-[0_0_25px_rgba(203,243,110,0.4)]"
               >
                 <span>Start Escaping</span>
                 <ArrowUpRight className="w-4 h-4 text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -145,7 +181,7 @@ export function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* AMBIENT CINEMATIC BACKGROUND */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">

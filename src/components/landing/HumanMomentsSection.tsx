@@ -4,9 +4,18 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const moments = [
-  { text: "The group trip that finally happened.", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=2000&auto=format&fit=crop" },
-  { text: "Your group chat almost killed this trip.", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop" },
-  { text: "Don't let another long weekend disappear.", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2000&auto=format&fit=crop" },
+  { 
+    text: "The group trip that finally happened.", 
+    img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2000&auto=format&fit=crop" 
+  },
+  { 
+    text: "Your group chat almost killed this trip.", 
+    img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=2000&auto=format&fit=crop" 
+  },
+  { 
+    text: "Don't let another long weekend disappear.", 
+    img: "https://images.unsplash.com/photo-1727986920536-e21345a9a960?q=80&w=2000&auto=format&fit=crop" 
+  },
 ];
 
 function MomentItem({ moment, index }: { moment: { text: string; img: string }, index: number }) {

@@ -6,6 +6,7 @@ import { HiddenDiscoveries } from "@/components/global/HiddenDiscoveries";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { ProblemSection } from "@/components/landing/ProblemSection";
 import { TheShiftSection } from "@/components/landing/TheShiftSection";
+import { ProductDemoSection } from "@/components/landing/ProductDemoSection";
 import { HumanMomentsSection } from "@/components/landing/HumanMomentsSection";
 import { StillnessSection } from "@/components/landing/StillnessSection";
 import { HowItFeelsSection } from "@/components/landing/HowItFeelsSection";
@@ -53,6 +54,7 @@ export default function Home() {
         <HeroSection />
         <ProblemSection />
         <TheShiftSection />
+        <ProductDemoSection />
         <HumanMomentsSection />
         <StillnessSection />
         <HowItFeelsSection />

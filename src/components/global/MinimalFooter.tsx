@@ -21,7 +21,9 @@ export function MinimalFooter() {
           Twitter
         </a>
         <a
-          href="#"
+          href="https://www.instagram.com/tripflow.official"
+          target="_blank"
+          rel="noopener noreferrer"
           className="hover:opacity-100 opacity-60 text-sm transition-opacity"
         >
           Instagram
